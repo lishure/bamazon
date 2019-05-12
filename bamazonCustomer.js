@@ -16,6 +16,17 @@ var connection = mysql.createConnection({
 // connect to the `ice_creamDB` database
 connection.connect(function (err) {
   if (err) throw err
-  console.log('connected as id ' + connection.threadId)
-  connection.end();
+  //console.log('connected as id ' + connection.threadId)
+  choices();
 })
+
+function choices () {
+    connection.query('SELECT * FROM products', function (err, res) {
+      if (err) throw err
+      for (var i = 0; i < res.length; i++) {
+        console.log(`${res[i].product_name}`)
+      }
+    })
+    connection.end();
+  }
+

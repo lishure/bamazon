@@ -24,7 +24,14 @@ function choices () {
     connection.query('SELECT * FROM products', function (err, res) {
       if (err) throw err
       for (var i = 0; i < res.length; i++) {
-        console.log(`${res[i].product_name}`)
+        console.log(
+            'Sku: ' +
+              res[i].sku +
+              ' || Product: ' +
+              res[i].product_name +
+              ' || Price: ' +
+              res[i].price
+          )
       }
     })
     connection.end();

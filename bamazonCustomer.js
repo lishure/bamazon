@@ -67,27 +67,23 @@ function choices () {
   ]).then(function (answers) {
     // initializes the variable newProgrammer to be a programmer object which will take
     // in all of the user's answers to the questions above
-    var newQuestion = new Question(answers.name, answers.quantity)
-    var quantityNeeded = answers.quantity;
- 	var skuRequested = answers.name;
- 	checkInventory(skuRequested, quantityNeeded);
-    // printInfo method is run to show that the newProgrammer object was successfully created and filled
-    newQuestion.printInfo();
-    checkInventory();
-  })
-}
-
-function checkInventory(skuRequested, quantityNeeded) {
-    connection.query('SELECT * FROM products WHERE sku=' + skuRequested, function (err, res) {
+    connection.query('SELECT * FROM products WHERE sku=?', answers.name, function (err, results) {
         if(err){console.log(err)};
-            if (quantityNeeded <= `${this.stock_quantity}`) {
-                console.log(`You have purchased ${this.quantity}`)
+            if (answers.quantity <= results[0].stock_quantity) {
+                var totalCost = results[0].price * answers.quantity;
+                console.log(`Your total for ${answers.quantity} ${results[0].product_name} comes up to $${totalCost}.`)
+               
+                //Need to update stock quantity
             }
             else {
                 console.log("Order can not be placed; Insufficient Quantity")
             } 
-
         }
       )
-      connection.end();
+    connection.end();
+  
+  })
 }
+
+
+

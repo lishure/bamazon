@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 // connect to the `ice_creamDB` database
 connection.connect(function (err) {
     if (err) throw err
-    console.log('connected as id ' + connection.threadId)
+
     start()
 })
 // function which prompts the user for what action they should take
@@ -50,29 +50,63 @@ function start() {
 function viewProducts() {
     connection.query('SELECT * FROM products', function (err, res) {
         if (err) throw err
-        for (var i = 0; i < res.length; i++) {
-            console.log(
-                'SKU: ' +
-                res[i].sku +
-                ' || Product: ' +
-                res[i].product_name +
-                ' || Price: ' +
-                res[i].price +
-                ' || Quantity: ' +
-                res[i].stock_quantity
-            )
-        }
+        console.table(res)
+        // for (var i = 0; i < res.length; i++) {
+        //     console.log(
+        //         'SKU: ' +
+        //         res[i].sku +
+        //         ' || Product: ' +
+        //         res[i].product_name +
+        //         ' || Price: ' +
+        //         res[i].price +
+        //         ' || Quantity: ' +
+        //         res[i].stock_quantity
+        //     )
+        // }
+        connection.end()
+    })
+    
+}
+
+function viewLow() {
+    var query = 'SELECT product_name,stock_quantity FROM products WHERE stock_quantity <= 50'
+    connection.query(query, function (err, res) {
+        if (err) throw err
+        console.table(res)
+        //   for (var i = 0; i < res.length; i++) {
+        //     console.log(res[i])
+        //   }
+        connection.end()
+
     })
 }
 
-function viewLow () {
-    console.log("view low")
-    var query = 'SELECT product_name FROM products GROUP BY product_name HAVING count(*) > 1'
-    connection.query(query, function (err, res) {
-      if (err) throw err
-      for (var i = 0; i < res.length; i++) {
-        console.log(res[i].product_name)
-      }
-    
+function addInventory() {
+    inquirer.prompt([
+        {
+            name: 'needSku',
+            message: 'What is the SKU of the product you wish to replenish?'
+        }, {
+            name: 'quantity',
+            message: 'How many units would you like to add?'
+        }
+    ]).then(function (answers) {
+
+        connection.query('SELECT stock_quantity,product_name FROM products WHERE sku=?', answers.needSku, function (err, results) {
+            if (err) { console.log(err) };
+            var replenish = results[0].stock_quantity + answers.quantity;
+            var pName = results[0].product_name;
+            
+            connection.query('UPDATE products SET stock_quantity=? WHERE sku=?', [replenish, answers.needSku],
+                function (err, results) {
+                    if (err) { console.log(err) };
+                    console.log(answers.quantity + " items added to " + pName)
+                    connection.end();   
+                })
+        })
+        return
     })
-  }
+}
+//to add a product 
+//connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity)
+//VALUES (?, ?, ?, ?)', [c,g,1,4], function (one connection query) ) 

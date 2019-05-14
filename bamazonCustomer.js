@@ -37,7 +37,7 @@ function choices () {
       }
       askQuestion();
     })
-    connection.end();
+    
   }
 
   class Question {
@@ -68,7 +68,26 @@ function choices () {
     // initializes the variable newProgrammer to be a programmer object which will take
     // in all of the user's answers to the questions above
     var newQuestion = new Question(answers.name, answers.quantity)
+    var quantityNeeded = answers.quantity;
+ 	var skuRequested = answers.name;
+ 	checkInventory(skuRequested, quantityNeeded);
     // printInfo method is run to show that the newProgrammer object was successfully created and filled
-    newQuestion.printInfo()
+    newQuestion.printInfo();
+    checkInventory();
   })
+}
+
+function checkInventory(skuRequested, quantityNeeded) {
+    connection.query('SELECT * FROM products WHERE sku=' + skuRequested, function (err, res) {
+        if(err){console.log(err)};
+            if (quantityNeeded <= `${this.stock_quantity}`) {
+                console.log(`You have purchased ${this.quantity}`)
+            }
+            else {
+                console.log("Order can not be placed; Insufficient Quantity")
+            } 
+
+        }
+      )
+      connection.end();
 }

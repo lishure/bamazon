@@ -48,7 +48,7 @@ function start() {
 }
 
 function viewProducts() {
-    connection.query('SELECT * FROM products', function (err, res) {
+    connection.query('SELECT sku,product_name,price,stock_quantity FROM products', function (err, res) {
         if (err) throw err
         console.table(res)
         // for (var i = 0; i < res.length; i++) {
@@ -69,7 +69,7 @@ function viewProducts() {
 }
 
 function viewLow() {
-    var query = 'SELECT product_name,stock_quantity FROM products WHERE stock_quantity <= 50'
+    var query = 'SELECT sku,product_name,stock_quantity FROM products WHERE stock_quantity <= 50'
     connection.query(query, function (err, res) {
         if (err) throw err
         console.table(res)
@@ -94,7 +94,7 @@ function addInventory() {
 
         connection.query('SELECT stock_quantity,product_name FROM products WHERE sku=?', answers.needSku, function (err, results) {
             if (err) { console.log(err) };
-            var replenish = results[0].stock_quantity + answers.quantity;
+            var replenish = parseInt(results[0].stock_quantity) + parseInt(answers.quantity);
             var pName = results[0].product_name;
             
             connection.query('UPDATE products SET stock_quantity=? WHERE sku=?', [replenish, answers.needSku],

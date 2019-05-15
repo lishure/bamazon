@@ -23,7 +23,7 @@ connection.connect(function (err) {
 })
 
 function choices() {
-    connection.query('SELECT * FROM products', function (err, res) {
+    connection.query('SELECT sku,product_name,price,stock_quantity FROM products', function (err, res) {
         if (err) throw err
         console.table(res)
         // for (var i = 0; i < res.length; i++) {
@@ -78,9 +78,9 @@ function askQuestion() {
                 //Need to update stock quantity
                 connection.query('UPDATE products SET stock_quantity=? WHERE sku=?', [difference, answers.name],    
                 function (err, results) { 
-                    console.log("This", answers.name)
+                   // console.log("This", answers.name)
                         if (err) { console.log(err) };
-                        console.log(results)
+                       // console.log(results)
                         connection.end();
                     })
             }

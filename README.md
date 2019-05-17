@@ -7,7 +7,7 @@ The Bamazon application takes in 2 node applications: Customer and Manager
 Customer:
 
 To view available products for sale and to place an order, simply open up the terminal and type in "node bamazonCustomer.js":
-![customerjs example](Screenshots/PurchaseItem.png)
+![PurchaseItem](https://user-images.githubusercontent.com/46510990/57913397-5ec9c680-7841-11e9-8c2a-d40670da1309.png)
 
 Manager:
 

@@ -14,10 +14,11 @@ Manager:
 To view, replenish, or add products, simple open up the terminal and type in "node bamazonManager.js".
 
 The manager application offers 4 options:
->View Products for Sale
->View Low Inventory
->Add to Inventory
->Add New Product
+1) View Products for Sale
+2) View Low Inventory
+3) Add to Inventory
+4) Add New Product
+
 ![ManagerJSStart](https://user-images.githubusercontent.com/46510990/57913813-3d1d0f00-7842-11e9-886a-82b289fc42f1.png)
 
 Utilizing the arrow keys, you can select one of the 4 options. 

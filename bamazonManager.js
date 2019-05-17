@@ -45,7 +45,7 @@ function start() {
             //     connection.end()
             // }
         })
-}
+}  
 
 function viewProducts() {
     connection.query('SELECT sku,product_name,price,stock_quantity FROM products', function (err, res) {
@@ -107,6 +107,55 @@ function addInventory() {
         return
     })
 }
-//to add a product 
-//connection.query('INSERT INTO products (product_name, department_name, price, stock_quantity)
-//VALUES (?, ?, ?, ?)', [c,g,1,4], function (one connection query) ) 
+
+
+function addNew() {
+	// console.log('___ENTER createNewProduct___');
+
+	// Prompt the user to enter information about the new product
+	inquirer.prompt([
+		{
+			type: 'input',
+			name: 'product_name',
+			message: 'Please enter the new product name.',
+		},
+		{
+			type: 'input',
+			name: 'department_name',
+			message: 'Which department does the new product belong to?',
+		},
+		{
+			type: 'input',
+			name: 'price',
+			message: 'What is the price per unit?',
+		
+		},
+		{
+			type: 'input',
+			name: 'stock_quantity',
+			message: 'How many items are in stock?',
+		
+		}
+	]).then(function(input) {
+		// console.log('input: ' + JSON.stringify(input));
+
+		console.log('Adding New Item: \n    product_name = ' + input.product_name + '\n' +  
+									   '    department_name = ' + input.department_name + '\n' +  
+									   '    price = ' + input.price + '\n' +  
+									   '    stock_quantity = ' + input.stock_quantity);
+
+		// Create the insertion query string
+		var queryStr = 'INSERT INTO products SET ?';
+
+		// Add new product to the db
+		connection.query(queryStr, input, function (error, results, fields) {
+			if (error) throw error;
+
+			console.log('New product has been added to the inventory under Item ID ' + results.insertId + '.');
+			console.log("\n---------------------------------------------------------------------\n");
+
+			// End the database connection
+			connection.end();
+		});
+  })
+}

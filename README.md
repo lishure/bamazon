@@ -18,18 +18,18 @@ The manager application offers 4 options:
 >View Low Inventory
 >Add to Inventory
 >Add New Product
->>Insert Manager SS here<<
+![ManagerJSStart](https://user-images.githubusercontent.com/46510990/57913813-3d1d0f00-7842-11e9-886a-82b289fc42f1.png)
 
 Utilizing the arrow keys, you can select one of the 4 options. 
 
 Selecting "View Products for Sale" displays the database of all products.
->>Insert ViewProducts<<
+![ViewProducts](https://user-images.githubusercontent.com/46510990/57913816-3db5a580-7842-11e9-8a36-ebc728569352.png)
 
 Selecting "View Low Inventory" would show products that have less than 5 in stock.
->>Insert ViewLow<<
+![ViewLow](https://user-images.githubusercontent.com/46510990/57913815-3db5a580-7842-11e9-9846-ba81d0300944.png)
 
 Selecting "Add to Inventory" would allow user to replenish stock by inputting the SKU# and the quantity to be added.
->>Insert addInventory<<
+![AddInventory](https://user-images.githubusercontent.com/46510990/57913808-3d1d0f00-7842-11e9-96df-5022e98e9b6b.png)
 
 Selecting "Add New Product" would allow user to add a new product inputting specific parameters (product name, price, department, quantity) The SKU# is populated automatically.
->>Insert AddNew<<
+![AddNew](https://user-images.githubusercontent.com/46510990/57913811-3d1d0f00-7842-11e9-8a44-028755849335.png)
